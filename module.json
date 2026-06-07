@@ -2,7 +2,7 @@
   "name": "MSTeamsSso",
   "alias": "msteamssso",
   "description": "FreeScout MS Teams integration with Single Sign-On 1-click log-in",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "author": "Managed FreeScout by StackPros",
   "keywords": [],
   "active": 1,
