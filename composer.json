@@ -1,0 +1,31 @@
+{
+  "name": "stackpros/freescout-msteams-sso",
+  "description": "FreeScout module to accept Teams SSO tokens and auto-provision users (SampleModule format).",
+  "authors": [
+        {
+            "name": "StackPros",
+            "email": "support@stackpros.io"
+        }
+    ],
+  "type": "library",
+  "require": {
+    "php": ">=7.2",
+    "guzzlehttp/guzzle": "^6.3|^7.0",
+    "firebase/php-jwt": "^6.0"
+  },
+  "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\MSTeamsSso\\Providers\\MSTeamsSsoServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\MSTeamsSso\\": ""
+        }
+    }
+}

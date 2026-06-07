@@ -1,0 +1,22 @@
+{
+  "name": "MSTeamsSso",
+  "alias": "msteamssso",
+  "description": "Teams SSO bridge for FreeScout tabs - single sign-on via Microsoft Teams",
+  "version": "1.1.7",
+  "author": "StackPros",
+  "keywords": [],
+  "active": 1,
+  "order": 0,
+  "providers": [
+    "Modules\\MSTeamsSso\\Providers\\MSTeamsSsoServiceProvider"
+  ],
+  "authorUrl": "https://stackpros.io",
+  "aliases": {},
+  "files": [
+    "start.php"
+  ],
+  "img": "/modules/msteamssso/img/msteamssso-icon.png",
+  "requires": [],
+  "latestVersionUrl": "https://raw.githubusercontent.com/managedfreescout/msteamssso/main/version.txt",
+  "latestVersionZipUrl": "https://github.com/managedfreescout/msteamssso/releases/latest/download/msteamssso.zip"
+}
