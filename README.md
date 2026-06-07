@@ -38,7 +38,7 @@ The module is fully working and deployed — FreeScout runs as a proper Teams ta
 
 - **Name:** MSTeams SSO
 - **Alias:** msteamssso
-- **Current version:** 1.1.7
+- **Current version:** 1.2.1
 - **Required FreeScout version:** >= 1.8.202 (command.after_app_update hook)
 - **Recommended FreeScout version:** >= 1.8.219 (CSP warning support)
 - **Product ID (licensing server):** [TO BE ASSIGNED on stackpros.io DLM]
@@ -295,6 +295,7 @@ git push -u origin main
 | 1.1.8 | Jun 2026 | Updated description, author, authorUrl. Added .gitignore. GitHub repo live at ManagedFreeScout/msteamssso. |
 | 1.1.9 | Jun 2026 | Added license terms link below license key field (help-block style). |
 | 1.2.0 | Jun 2026 | TeamsJS SDK upgraded v1.8.0 → v2.19.0. teams-entry.blade.php: new CDN, app.initialize().then() flow, getAuthToken() Promise chain, @endsection added. msteamssso.js: smart link handler — same-domain links via window.location.href, external via app.openLink() with window.open() fallback; executeDeepLink removed. |
+| 1.2.1 | Jun 2026 | Rolled back TeamsJS to v1.8.0 SDK after v2 upgrade caused getAuthToken() to hang (error 0cdi — requires Azure AD manifest webApplicationInfo not yet in place). SSO flow restored to v1 API: microsoftTeams.initialize() callback + getAuthToken successCallback/failureCallback. Smart link handler kept but external links reverted from app.openLink() to executeDeepLink() for v1 SDK compatibility. @endsection fix from v1.2.0 retained. |
 
 ---
 
@@ -318,3 +319,4 @@ In priority order, each as a SEPARATE focused session (one change, test, package
 | 6 Jun 2026 | Long debugging session. v1.1.1–1.1.6 attempts at custom settings-save all failed (Whoops / no save / broke top menu). Root cause: must use FreeScout NATIVE settings handler, not a custom route. v1.1.7 mirrors CfsAssist pattern — settings now save correctly, Tenant/Client ID editable in UI. Also learned: BAK folders break module loading; modules auto-deactivate on reinstall; manual cache clear (method 4) is the reliable recovery. | Links-in-Teams fix (separate session); auto-update endpoints; README-install.md |
 | 7 Jun 2026 | Auto-update via GitHub: updated module.json latestVersionUrl/latestVersionZipUrl to managedfreescout org. Created version.txt (1.1.7). Wrote /var/www/modules-dev/release-module.sh (bumps version, updates version.txt, packages alias.zip). Documented full GitHub release workflow in README. | Create managedfreescout/msteamssso repo; run git init + first push; publish v1.1.7 Release |
 | 7 Jun 2026 | v1.2.0: TeamsJS SDK upgraded from v1.8.0 to v2.19.0. teams-entry.blade.php: CDN updated, initialize→app.initialize(), getAuthToken callbacks→Promise chain, added @endsection. msteamssso.js: replaced old IIFE with smart link handler — same-domain links use window.location.href (no SDK needed), external links use microsoftTeams.app.openLink() with window.open() fallback; executeDeepLink removed. Pushed to ManagedFreeScout/msteamssso (007e12c). /tmp/msteamssso.zip packaged. | Deploy to FreeScout; test SSO login + link navigation in Teams |
+| 7 Jun 2026 | v1.2.1: Rolled back TeamsJS to v1.8.0. teams-entry.blade.php: CDN reverted to statics.teams.microsoft.com/sdk/v1.8.0/…, SSO flow reverted to microsoftTeams.initialize() callback + getAuthToken successCallback/failureCallback. @endsection kept. msteamssso.js: smart link handler retained — same-domain → window.location.href, external → executeDeepLink() (v1 compatible), window.open() fallback. Reason: v2 SDK getAuthToken() hung with error 0cdi — requires Azure AD manifest webApplicationInfo config not yet in place; parking TeamsJS v2 upgrade for dev involvement. Pushed to ManagedFreeScout/msteamssso (f89eee0). /tmp/MSTeamsSso_v1.2.1.zip packaged. | Deploy v1.2.1 to FreeScout; test SSO login; complete GitHub Release to activate auto-update endpoint |
