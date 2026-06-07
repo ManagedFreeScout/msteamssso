@@ -1,16 +1,16 @@
 {
   "name": "MSTeamsSso",
   "alias": "msteamssso",
-  "description": "FreeScout MS Teams integration with Single Sign-On 1-click log-in",
-  "version": "1.2.0",
-  "author": "Managed FreeScout by StackPros",
+  "description": "Teams SSO bridge for FreeScout tabs - single sign-on via Microsoft Teams",
+  "version": "1.2.1",
+  "author": "StackPros",
   "keywords": [],
   "active": 1,
   "order": 0,
   "providers": [
     "Modules\\MSTeamsSso\\Providers\\MSTeamsSsoServiceProvider"
   ],
-  "authorUrl": "https://managedfreescout.com",
+  "authorUrl": "https://stackpros.io",
   "aliases": {},
   "files": [
     "start.php"

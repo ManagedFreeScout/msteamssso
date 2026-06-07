@@ -6,32 +6,21 @@
         try {
             const linkUrl = new URL(url, window.location.href);
             const currentHost = window.location.hostname;
-
-            // Same-domain links (FreeScout internal navigation) —
-            // just navigate within the iframe directly, no Teams SDK needed
+            // Same-domain links — navigate within iframe directly
             if (linkUrl.hostname === currentHost) {
                 window.location.href = linkUrl.href;
                 return;
             }
-
-            // External links — use Teams SDK app.openLink()
-            if (typeof microsoftTeams !== 'undefined' && microsoftTeams.app) {
-                microsoftTeams.app.openLink(linkUrl.href).catch(() => {
-                    // Fallback if openLink fails
-                    window.open(linkUrl.href, '_blank');
-                });
+            // External links — use Teams SDK executeDeepLink()
+            if (typeof microsoftTeams !== 'undefined' && microsoftTeams.executeDeepLink) {
+                microsoftTeams.executeDeepLink(linkUrl.href);
             } else {
-                // SDK not available, open normally
                 window.open(linkUrl.href, '_blank');
             }
-        } catch(e) {
-            // Invalid URL, ignore
-        }
+        } catch(e) { }
     }
 
-    // Wait for DOM ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Intercept all target="_blank" link clicks
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a[target="_blank"]');
             if (!link || !link.href) return;
@@ -39,7 +28,6 @@
             handleLink(link.href);
         }, true);
 
-        // Intercept window.open() calls
         const originalOpen = window.open;
         window.open = function(url, target, features) {
             if (url && (target === '_blank' || target === undefined || target === null)) {

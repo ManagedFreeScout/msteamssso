@@ -292,6 +292,9 @@ git push -u origin main
 | 1.1.7 | Jun 2026 | Settings save reworked to use FreeScout's NATIVE handler (CfsAssist pattern) after custom-route attempts (1.1.1–1.1.6) failed. Tenant ID + Client ID now editable in UI, DB-stored, no .env/SSH needed. Generic placeholder text. amber (not red) setup-required banner. |
 
 (Intermediate 1.1.1–1.1.6 were iterations toward the working settings save and are superseded by 1.1.7.)
+| 1.1.8 | Jun 2026 | Updated description, author, authorUrl. Added .gitignore. GitHub repo live at ManagedFreeScout/msteamssso. |
+| 1.1.9 | Jun 2026 | Added license terms link below license key field (help-block style). |
+| 1.2.0 | Jun 2026 | TeamsJS SDK upgraded v1.8.0 → v2.19.0. teams-entry.blade.php: new CDN, app.initialize().then() flow, getAuthToken() Promise chain, @endsection added. msteamssso.js: smart link handler — same-domain links via window.location.href, external via app.openLink() with window.open() fallback; executeDeepLink removed. |
 
 ---
 
@@ -314,3 +317,4 @@ In priority order, each as a SEPARATE focused session (one change, test, package
 | Jun 2026 | v1.1.0 security pass (11 fixes); CSP manually re-added; confirmed working Android + Win11 desktop | Test, fix links |
 | 6 Jun 2026 | Long debugging session. v1.1.1–1.1.6 attempts at custom settings-save all failed (Whoops / no save / broke top menu). Root cause: must use FreeScout NATIVE settings handler, not a custom route. v1.1.7 mirrors CfsAssist pattern — settings now save correctly, Tenant/Client ID editable in UI. Also learned: BAK folders break module loading; modules auto-deactivate on reinstall; manual cache clear (method 4) is the reliable recovery. | Links-in-Teams fix (separate session); auto-update endpoints; README-install.md |
 | 7 Jun 2026 | Auto-update via GitHub: updated module.json latestVersionUrl/latestVersionZipUrl to managedfreescout org. Created version.txt (1.1.7). Wrote /var/www/modules-dev/release-module.sh (bumps version, updates version.txt, packages alias.zip). Documented full GitHub release workflow in README. | Create managedfreescout/msteamssso repo; run git init + first push; publish v1.1.7 Release |
+| 7 Jun 2026 | v1.2.0: TeamsJS SDK upgraded from v1.8.0 to v2.19.0. teams-entry.blade.php: CDN updated, initialize→app.initialize(), getAuthToken callbacks→Promise chain, added @endsection. msteamssso.js: replaced old IIFE with smart link handler — same-domain links use window.location.href (no SDK needed), external links use microsoftTeams.app.openLink() with window.open() fallback; executeDeepLink removed. Pushed to ManagedFreeScout/msteamssso (007e12c). /tmp/msteamssso.zip packaged. | Deploy to FreeScout; test SSO login + link navigation in Teams |
