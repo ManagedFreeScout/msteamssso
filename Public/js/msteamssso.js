@@ -1,62 +1,54 @@
-// Fix #8: Teams link navigation — intercept target="_blank" so links open inside Teams
-// rather than spawning a new browser window. Loads Teams SDK dynamically when in iframe.
-(function () {
-    if (window === window.top) {
-        return; // not in an iframe, nothing to do
+(function() {
+    // Only run inside an iframe (Teams)
+    if (window.self === window.top) return;
+
+    function handleLink(url) {
+        try {
+            const linkUrl = new URL(url, window.location.href);
+            const currentHost = window.location.hostname;
+
+            // Same-domain links (FreeScout internal navigation) —
+            // just navigate within the iframe directly, no Teams SDK needed
+            if (linkUrl.hostname === currentHost) {
+                window.location.href = linkUrl.href;
+                return;
+            }
+
+            // External links — use Teams SDK app.openLink()
+            if (typeof microsoftTeams !== 'undefined' && microsoftTeams.app) {
+                microsoftTeams.app.openLink(linkUrl.href).catch(() => {
+                    // Fallback if openLink fails
+                    window.open(linkUrl.href, '_blank');
+                });
+            } else {
+                // SDK not available, open normally
+                window.open(linkUrl.href, '_blank');
+            }
+        } catch(e) {
+            // Invalid URL, ignore
+        }
     }
 
-    function applyTeamsLinkFix() {
-        // Intercept anchor clicks with target="_blank"
-        document.addEventListener('click', function (e) {
-            var link = e.target.closest('a[target="_blank"]');
-            if (!link) return;
+    // Wait for DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+        // Intercept all target="_blank" link clicks
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a[target="_blank"]');
+            if (!link || !link.href) return;
             e.preventDefault();
-            if (window.microsoftTeams && microsoftTeams.app && microsoftTeams.app.openLink) {
-                microsoftTeams.app.openLink(link.href);
-            } else if (window.microsoftTeams && microsoftTeams.executeDeepLink) {
-                microsoftTeams.executeDeepLink(link.href);
-            } else {
-                window.location.href = link.href;
-            }
-        });
+            handleLink(link.href);
+        }, true);
 
-        // Intercept window.open()
-        var originalOpen = window.open;
-        window.open = function (url, target, features) {
-            if (target === '_blank' || target === undefined) {
-                if (window.microsoftTeams && microsoftTeams.app && microsoftTeams.app.openLink) {
-                    microsoftTeams.app.openLink(url);
-                } else if (window.microsoftTeams && microsoftTeams.executeDeepLink) {
-                    microsoftTeams.executeDeepLink(url);
-                }
+        // Intercept window.open() calls
+        const originalOpen = window.open;
+        window.open = function(url, target, features) {
+            if (url && (target === '_blank' || target === undefined || target === null)) {
+                handleLink(url);
                 return null;
             }
             return originalOpen.apply(this, arguments);
         };
-    }
-
-    function initTeamsSdk() {
-        if (typeof microsoftTeams === 'undefined') return;
-
-        // Support both SDK v1 (initialize callback) and v2 (app.initialize promise)
-        if (microsoftTeams.app && typeof microsoftTeams.app.initialize === 'function') {
-            microsoftTeams.app.initialize().then(applyTeamsLinkFix).catch(function () {
-                // Not in a real Teams context — ignore
-            });
-        } else if (typeof microsoftTeams.initialize === 'function') {
-            microsoftTeams.initialize(applyTeamsLinkFix);
-        }
-    }
-
-    if (typeof microsoftTeams !== 'undefined') {
-        initTeamsSdk();
-    } else {
-        // Dynamically load Teams SDK, then initialise
-        var script = document.createElement('script');
-        script.src = 'https://statics.teams.microsoft.com/sdk/v1.8.0/js/MicrosoftTeams.min.js';
-        script.onload = initTeamsSdk;
-        document.head.appendChild(script);
-    }
+    });
 })();
 
 // License management — used by settings page only
