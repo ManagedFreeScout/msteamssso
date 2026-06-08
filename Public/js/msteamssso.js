@@ -1,3 +1,5 @@
+var _msTeamsInitDone = false;
+
 (function() {
     // Only run inside an iframe (Teams)
     if (window.self === window.top) return;
@@ -11,16 +13,16 @@
                 window.location.href = linkUrl.href;
                 return;
             }
-            // External links — use Teams SDK executeDeepLink()
-            if (typeof microsoftTeams !== 'undefined' && microsoftTeams.executeDeepLink) {
-                microsoftTeams.executeDeepLink(linkUrl.href);
+            // External links — use Teams SDK app.openLink()
+            if (typeof microsoftTeams !== 'undefined' && microsoftTeams.app && microsoftTeams.app.openLink) {
+                microsoftTeams.app.openLink(linkUrl.href);
             } else {
                 window.open(linkUrl.href, '_blank');
             }
         } catch(e) { }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    function setupLinkInterception() {
         document.addEventListener('click', function(e) {
             const link = e.target.closest('a[target="_blank"]');
             if (!link || !link.href) return;
@@ -36,7 +38,16 @@
             }
             return originalOpen.apply(this, arguments);
         };
-    });
+    }
+
+    if (typeof microsoftTeams !== 'undefined' && !_msTeamsInitDone) {
+        _msTeamsInitDone = true;
+        microsoftTeams.app.initialize().then(function() {
+            setupLinkInterception();
+        });
+    } else {
+        setupLinkInterception();
+    }
 })();
 
 // License management — used by settings page only

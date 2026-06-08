@@ -135,6 +135,7 @@ class MSTeamsSsoServiceProvider extends ServiceProvider
                 'https://*.teams.microsoft.com',
                 'https://*.skype.com',
                 'https://*.whyatwork.nl',
+                'https://*.cloud.microsoft',
             ];
             return array_unique(array_merge((array) $ancestors, $extra));
         });
@@ -173,7 +174,7 @@ class MSTeamsSsoServiceProvider extends ServiceProvider
         }
 
         $currentContent = file_get_contents($htaccessPath);
-        $cspLine = 'Header always set Content-Security-Policy "frame-ancestors \'self\' https://teams.microsoft.com https://*.teams.microsoft.com https://*.skype.com https://*.whyatwork.nl;"';
+        $cspLine = 'Header always set Content-Security-Policy "frame-ancestors \'self\' https://teams.microsoft.com https://*.teams.microsoft.com https://*.skype.com https://*.whyatwork.nl https://*.cloud.microsoft;"';
 
         if (strpos($currentContent, $cspLine) !== false) {
             return;
