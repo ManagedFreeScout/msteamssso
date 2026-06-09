@@ -140,6 +140,11 @@ class MSTeamsSsoServiceProvider extends ServiceProvider
             return array_unique(array_merge((array) $ancestors, $extra));
         });
 
+        // Allow TeamsJS v2 SDK to load from Microsoft CDN
+        \Eventy::addFilter('csp.script_src', function ($extra) {
+            return trim($extra . ' https://res.cdn.office.net');
+        });
+
         // Inject msteamssso.js via the javascripts filter — the correct FreeScout module
         // pattern. Fires after jQuery is loaded (layout line 284). FreeScout wraps
         // Minify::javascript() in try/catch, so a missing symlink won't break the page.
