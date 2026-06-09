@@ -19,7 +19,8 @@
                     body: JSON.stringify({ token: token })
                 }).then(function (r) {
                     if (r.ok) {
-                        setTimeout(function() { window.location.replace('/'); }, 500);
+                        document.getElementById('status').innerText = 'Login successful, redirecting...';
+                        window.top.location.href = '/';
                     } else {
                         document.getElementById('status').innerText = 'SSO login failed — opening fallback.';
                         window.location.href = '/teams-fallback';
