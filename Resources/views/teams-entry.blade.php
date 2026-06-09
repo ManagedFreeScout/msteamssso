@@ -19,7 +19,7 @@
                     body: JSON.stringify({ token: token })
                 }).then(function (r) {
                     if (r.ok) {
-                        window.location.href = '/';
+                        window.location.href = '/mailboxes';
                     } else {
                         document.getElementById('status').innerText = 'SSO login failed — opening fallback.';
                         window.location.href = '/teams-fallback';
