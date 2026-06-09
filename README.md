@@ -276,6 +276,7 @@ zip -r /tmp/MSTeamsSso_v1.x.x.zip MSTeamsSso/
 | 1.1.8 | Jun 2026 | Description/author updated; GitHub auto-update wired up (ManagedFreeScout org). |
 | 1.1.9 | Jun 2026 | (planned) license terms link in settings — folded into later build. |
 | 1.2.0 | Jun 2026 | ATTEMPTED TeamsJS v2.19.0 upgrade + smart link interception. SSO hung with 0cdi. Root cause was actually a malformed .htaccess CSP, not the SDK — but v2 also needs Azure/manifest changes not yet in place. Rolled back. |
+| 1.3.1 | 9 Jun 2026 | Fix: redirect to /mailboxes after SSO login. GitHub release v1.3.1. |
 | 1.2.1 | Jun 2026 | CURRENT STABLE. Rolled TeamsJS back to v1.8.0. Kept smart link interception (same-domain → window.location.href; external → executeDeepLink, which only works for Teams deep links). SSO works desktop/mobile/web with the *.cloud.microsoft CSP fix. |
 
 ## Current status (Jun 2026)
@@ -322,5 +323,6 @@ In priority order, each as a SEPARATE focused session (one change, test, package
 | Date | What was done | What's next |
 |---|---|---|
 | Jun 2026 | README created; module fully analysed | Fix v1.1 issues |
+| 9 Jun 2026 | v1.3.1: fix redirect to /mailboxes after SSO login. Bumped module.json + version.txt, committed and pushed, built zip, GitHub release created. | Install v1.3.1 on FreeScout server |
 | Jun 2026 | v1.1.0 security pass (11 fixes); CSP manually re-added; confirmed working Android + Win11 desktop | Test, fix links |
 | 6 Jun 2026 | Long debugging session. v1.1.1–1.1.6 attempts at custom settings-save all failed (Whoops / no save / broke top menu). Root cause: must use FreeScout NATIVE settings handler, not a custom route. v1.1.7 mirrors CfsAssist pattern — settings now save correctly, Tenant/Client ID editable in UI. Also learned: BAK folders break module loading; modules auto-deactivate on reinstall; manual cache clear (method 4) is the reliable recovery. | Links-in-Teams fix (separate session); auto-update endpoints; README-install.md |
