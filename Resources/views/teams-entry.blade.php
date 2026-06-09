@@ -19,7 +19,7 @@
                     body: JSON.stringify({ token: token })
                 }).then(function (r) {
                     if (r.ok) {
-                        microsoftTeams.app.openLink('https://support.stackpros.io/mailboxes');
+                        setTimeout(function() { window.location.replace('/'); }, 500);
                     } else {
                         document.getElementById('status').innerText = 'SSO login failed — opening fallback.';
                         window.location.href = '/teams-fallback';

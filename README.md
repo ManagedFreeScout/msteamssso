@@ -38,7 +38,7 @@ The module is fully working and deployed — FreeScout runs as a proper Teams ta
 
 - **Name:** MSTeams SSO
 - **Alias:** msteamssso
-- **Current version:** 1.2.1
+- **Current version:** 1.3.2
 - **Required FreeScout version:** >= 1.8.202 (command.after_app_update hook)
 - **Recommended FreeScout version:** >= 1.8.219 (CSP warning support)
 - **Product ID (licensing server):** [TO BE ASSIGNED on stackpros.io DLM]
@@ -278,6 +278,7 @@ zip -r /tmp/MSTeamsSso_v1.x.x.zip MSTeamsSso/
 | 1.2.0 | Jun 2026 | ATTEMPTED TeamsJS v2.19.0 upgrade + smart link interception. SSO hung with 0cdi. Root cause was actually a malformed .htaccess CSP, not the SDK — but v2 also needs Azure/manifest changes not yet in place. Rolled back. |
 | 1.3.1 | 9 Jun 2026 | Fix: redirect to /mailboxes after SSO login. GitHub release v1.3.1. |
 | 1.2.1 | Jun 2026 | CURRENT STABLE. Rolled TeamsJS back to v1.8.0. Kept smart link interception (same-domain → window.location.href; external → executeDeepLink, which only works for Teams deep links). SSO works desktop/mobile/web with the *.cloud.microsoft CSP fix. |
+| 1.3.2 | 9 Jun 2026 | Fix: use app.openLink() for post-SSO redirect in Teams web. Bumped version, committed, pushed, GitHub release published. |
 
 ## Current status (Jun 2026)
 
@@ -322,6 +323,7 @@ In priority order, each as a SEPARATE focused session (one change, test, package
 
 | Date | What was done | What's next |
 |---|---|---|
+| 9 Jun 2026 | v1.3.2: Fix use app.openLink() for post-SSO redirect in Teams web. Bumped version.txt (was stale at 1.2.1) + module.json to 1.3.2. Committed + pushed. Built release zip (no .git). GitHub release v1.3.2 published at https://github.com/ManagedFreeScout/msteamssso/releases/tag/v1.3.2 | Install v1.3.2 on FreeScout server |
 | Jun 2026 | README created; module fully analysed | Fix v1.1 issues |
 | 9 Jun 2026 | v1.3.1: fix redirect to /mailboxes after SSO login. Bumped module.json + version.txt, committed and pushed, built zip, GitHub release created. | Install v1.3.1 on FreeScout server |
 | Jun 2026 | v1.1.0 security pass (11 fixes); CSP manually re-added; confirmed working Android + Win11 desktop | Test, fix links |
