@@ -5,7 +5,7 @@
     <div id="status">Initializing Teams SSO...</div>
 </div>
 <script src="https://res.cdn.office.net/teams-js/2.19.0/js/MicrosoftTeams.min.js"></script>
-<script>
+<script {!! \Helper::cspNonceAttr() !!}>
     if (typeof microsoftTeams === 'undefined') {
         document.getElementById('status').innerText = 'Microsoft Teams SDK not available. This page should run inside Teams tab.';
     } else {
