@@ -11,7 +11,7 @@
     } else {
         microsoftTeams.app.initialize().then(() => {
             document.getElementById('status').innerText = 'Requesting SSO token...';
-            microsoftTeams.authentication.getAuthToken({ resources: ["api://c2150aa6-529b-4053-8f5b-08611592c5c2"] }).then(token => {
+            microsoftTeams.authentication.getAuthToken().then(token => {
                 fetch('/teams-sso-login', {
                     method: 'POST',
                     credentials: 'include',
