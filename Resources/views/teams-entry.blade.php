@@ -15,7 +15,10 @@
                 fetch('/teams-sso-login', {
                     method: 'POST',
                     credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
                     body: JSON.stringify({ token: token })
                 }).then(function (r) {
                     if (r.ok) {
