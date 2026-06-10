@@ -24,7 +24,7 @@
                 }).then(function (r) {
                     if (r.ok) {
                         document.getElementById('status').innerText = 'Login successful, redirecting...';
-                        window.top.location.href = '/';
+                        window.location.href = '/';
                     } else {
                         document.getElementById('status').innerText = 'SSO login failed — opening fallback.';
                         window.location.href = '/teams-fallback';
