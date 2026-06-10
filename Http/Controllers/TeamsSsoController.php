@@ -126,14 +126,16 @@ class TeamsSsoController extends Controller
         $aud = $this->config['audience'] ?? $this->config['client_id'] ?? null;
         if ($aud) {
             $tokenAud = $payload->aud ?? null;
-            if (is_array($tokenAud)) {
-                if (!in_array($aud, $tokenAud, true)) {
-                    throw new \Exception('invalid_audience');
+            $tokenAudList = is_array($tokenAud) ? $tokenAud : [$tokenAud];
+            $matched = false;
+            foreach ($tokenAudList as $a) {
+                if ($a === $aud || str_ends_with((string)$a, '/' . $aud)) {
+                    $matched = true;
+                    break;
                 }
-            } else {
-                if ($tokenAud !== $aud) {
-                    throw new \Exception('invalid_audience');
-                }
+            }
+            if (!$matched) {
+                throw new \Exception('invalid_audience');
             }
         }
 
