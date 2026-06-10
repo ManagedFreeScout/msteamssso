@@ -128,7 +128,7 @@ class TeamsSsoController extends Controller
         $aud = $this->config['audience'] ?? $this->config['client_id'] ?? null;
         if ($aud) {
             $tokenAud = $payload->aud ?? null;
-            \Log::info('Teams SSO debug - token aud: ' . json_encode($payload->aud ?? 'not set') . ' | checking against: ' . json_encode($aud));
+            \Log::error('Teams SSO debug - token aud: ' . json_encode($payload->aud ?? 'not set') . ' | checking against: ' . json_encode($aud));
             $tokenAudList = is_array($tokenAud) ? $tokenAud : [$tokenAud];
             $matched = false;
             foreach ($tokenAudList as $a) {
