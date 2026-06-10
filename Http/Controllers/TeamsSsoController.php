@@ -35,6 +35,7 @@ class TeamsSsoController extends Controller
 
     public function login(Request $request)
     {
+        \Log::info('Teams SSO login() called - client_id config: ' . json_encode($this->config['client_id'] ?? 'not set'));
         $token = $request->input('token');
         if (empty($token)) {
             return response()->json(['error' => 'missing_token'], 400);
