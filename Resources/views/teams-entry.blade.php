@@ -11,6 +11,7 @@
     } else {
         microsoftTeams.app.initialize().then(() => {
             document.getElementById('status').innerText = 'Requesting SSO token...';
+            document.getElementById('status').innerText += ' | CSRF: ' + (document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').getAttribute('content').substring(0,10) : 'NOT FOUND');
             microsoftTeams.authentication.getAuthToken().then(token => {
                 fetch('/teams-sso-login', {
                     method: 'POST',
