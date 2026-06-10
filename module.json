@@ -2,7 +2,7 @@
     "name": "MSTeamsSso",
     "alias": "msteamssso",
     "description": "Teams SSO bridge for FreeScout tabs - single sign-on via Microsoft Teams",
-    "version": "1.3.10",
+    "version": "1.3.11",
     "author": "StackPros",
     "keywords": [],
     "active": 1,
