@@ -35,8 +35,6 @@ class TeamsSsoController extends Controller
 
     public function login(Request $request)
     {
-        file_put_contents('/tmp/teams-sso-debug.txt', date('Y-m-d H:i:s') . ' login() called, client_id: ' . ($this->config['client_id'] ?? 'not set') . "\n", FILE_APPEND);
-        \Log::info('Teams SSO login() called - client_id config: ' . json_encode($this->config['client_id'] ?? 'not set'));
         $token = $request->input('token');
         if (empty($token)) {
             return response()->json(['error' => 'missing_token'], 400);
@@ -128,7 +126,6 @@ class TeamsSsoController extends Controller
         $aud = $this->config['audience'] ?? $this->config['client_id'] ?? null;
         if ($aud) {
             $tokenAud = $payload->aud ?? null;
-            \Log::error('Teams SSO debug - token aud: ' . json_encode($payload->aud ?? 'not set') . ' | checking against: ' . json_encode($aud));
             $tokenAudList = is_array($tokenAud) ? $tokenAud : [$tokenAud];
             $matched = false;
             foreach ($tokenAudList as $a) {
